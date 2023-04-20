@@ -1,39 +1,29 @@
 # RAPS\_PoC\_deployment
 Project which creates everything you need to deploy HPC clusters on Azure and to begin testing ECMWF codes.
 
-## Install required programs
-First, install the azure cli and terraform if required. Terraform is a tool for automating cloud deployment and it requires the azure CLI to be able to deploy Azure instances
+## 1: Install required programs
+First, install the azure cli and terraform if required. Terraform is a program which can deploy cloud instances using code instead of a GUI  and it requires the azure CLI to be able to deploy Azure instances
 the script "scripts/install\_prereqs.sh" will try install terraform and the azure cli for you. If succseful, you will be prompted to log in.
 
 
-## Deploy a Cyclecloud server
-Cyclecloud is 
-2: use terraform to create a vm which hosts cyclecloud
+## 2: Deploy a Cyclecloud host server
+Cyclecloud is an azure tool for automating the creation and deployment of HPC clusters. It is a server with a web front-end which you can use to interactively create clusters.
+"deploy-cyclecloud/" contains a terraform project which will deploy a cyclecloud host server. Create your cyclecloud host as outlined in "deploy-cyclecloud/README.md"
 
 
-4: uploads a custom cluster template to cyclecloud. This comes preloaded with additional compilers and MPI libraries as well as the IFS dwarves and evntually RAPS
+## 3: Configure the Cyclecloud CLI
+There is also a CLI for cyclecloud which you can use to upload custom cluster definition files.
+The directory "cluster-configs/" contains a template file which defines a cluster for testing ECMWF workloads on the Azure cloud. 
+	The file "scripts/install_cyclecloud_cli.sh" installs and configures the CC cli. It also uploads a machine image preloaded with ECMWF codes and additional compilers and libraries
+	The file ends by outputing the web address for the Cyclecloud GUI, as well as the username and password required to log in
+
+## 4: Launch a Cluster
+Navigate to the URL outputed by "scripts/install\_cyclecloud\_cli.sh" and log in. Click the "+" button in the bottom left corner to create a new cluster. Select the template called "alma\_slurm\_singleQ". Most options are preloaded, simply fill in a name and select a subnet. Currently please select the one starting "cc\_tf"
 
 5: create and launch a cluster via the cyclecloud gui
 
 
-## Image creation
-
-create an image which has all the keys and libraries required to run this repo from scratch. this is a list of keys and libraries required as they come up
-1: github key 
-        if this is a frsh vm make sure you get the key (e.g. from cathals_personal_vm ~/.shh/github)
-        and add this to ~/.ssh/config:
-                Host github.com
-                        User git
-                        Hostname github.com
-                        IdentityFile ~/.ssh/github
-
-        if you get a "bad permissions" error when cloning run this:
-                chmod 700 ~/.ssh
-                chmod 600 ~/.ssh/*
-2: clone this repo itself
-	git clone git@github.com:cathalobrien/RAPS_PoC_deployment.git
-
-3: install terraform
-	sudo yum install -y yum-utils
-	sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-	sudo yum -y install terraform
+## TODO
+make terraform create an subnet and preload this in the cluster template
+change the terraform prefix so I can track them easier, also add tags for the same reson
+test if this code supports multiple parallel CC deployments, if not then add random numbers to the prefix so that multiple can be created
