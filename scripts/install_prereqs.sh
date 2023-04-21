@@ -10,10 +10,10 @@ sudo yum -y install terraform
 terraform --version
 
 #Install Azure CLI
-yum check-update
+sudo yum check-update & true
 sudo yum install -y gcc libffi-devel python36u-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 
 echo "now type 'az login' to complete setup"
-az login
+az login #do i even need this if i'm just using service principals?
 
