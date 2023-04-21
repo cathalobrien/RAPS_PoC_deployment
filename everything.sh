@@ -6,6 +6,8 @@ set -e
 
 cd "$(dirname "$0")/scripts" #ensure we are in the RAPS_PoC_deployment/scripts dir
 
+bash make_keys.sh #generate ssh keys to connect to CC
+
 bash install_prereqs.sh #install azure cli and terraform
 
 bash deploy_cyclecloud_host.sh #create a server which runs cyclecloud, takes about 20 mins
