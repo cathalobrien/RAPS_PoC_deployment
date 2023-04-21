@@ -29,3 +29,6 @@ make terraform create an subnet and preload this in the cluster template \
 change the terraform prefix so I can track them easier, also add tags for the same reson \
 test if this code supports multiple parallel CC deployments, if not then add random numbers to the prefix so that multiple can be created \
 add an option to optionally create CC host and instead specify URL of an existing CC \
+
+public key isnt being aded to hpc\_admin account correctly
+i guess i have to get the priv key into this repo somehow too
