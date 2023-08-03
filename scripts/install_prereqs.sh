@@ -15,5 +15,7 @@ sudo yum install -y gcc libffi-devel python36-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 
 echo "now type 'az login' to complete setup"
-az login #do i even need this if i'm just using service principals?
+cp ~/bin/az /usr/bin #so root can find it
+#sudo az login 
+sudo az login 
 

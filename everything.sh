@@ -1,8 +1,7 @@
 #Script which tries to do everything automatically
 #currently untested
 #alternatively, follow the instructions in README.md
-
-set -e
+set -ex
 
 cd "$(dirname "$0")/scripts" #ensure we are in the RAPS_PoC_deployment/scripts dir
 

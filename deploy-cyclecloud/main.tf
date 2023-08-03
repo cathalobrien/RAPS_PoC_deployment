@@ -73,7 +73,7 @@ resource "azurerm_virtual_machine_extension" "install_cyclecloud" {
     # ${var.cyclecloud_dns_label}.${var.location}.cloudapp.azure.com" 
   settings = <<SETTINGS
     {
-        "commandToExecute": "echo \"Launch Time: \" > /tmp/launch_time  && date >> /tmp/launch_time && curl -k -L -o /tmp/cyclecloud_install.py \"${local.cyclecloud_install_script_url}\" && python3 /tmp/cyclecloud_install.py --acceptTerms --useManagedIdentity --username=${var.cyclecloud_username} --password='${var.cyclecloud_password}' --publickey='${var.cyclecloud_user_publickey}' --storageAccount=${var.cyclecloud_storage_account} --webServerMaxHeapSize=4096M --webServerPort=80 --webServerSslPort=443"
+        "commandToExecute": "echo \"Launch Time: \" > /tmp/launch_time  && date >> /tmp/launch_time && curl -k -L -o /tmp/cyclecloud_install.py \"${local.cyclecloud_install_script_url}\" && python3 /tmp/cyclecloud_install.py --acceptTerms --useManagedIdentity --username=${var.cyclecloud_username} --password='${var.cyclecloud_password}' --publickey='${var.cyclecloud_user_publickey}' --storageAccount=${var.cyclecloud_storage_account} --webServerMaxHeapSize=4096M --webServerPort=80 --webServerSslPort=443 "
     }
 SETTINGS
 }

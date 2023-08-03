@@ -567,6 +567,11 @@ def main():
                         default="",
                         help="Over-ride CycleCloud hostname for cluster/back-end connections")
 
+    parser.add_argument("--asRoot",
+                        dest="asRoot",
+                        action="store_true",
+                        help="use asRoot if running as root user to create user credentials for cyclecloud account.")
+
     args = parser.parse_args()
 
     print("Debugging arguments: %s" % args)
@@ -608,7 +613,8 @@ def main():
         letsEncrypt(args.hostname)
 
     #  Create user requires root privileges
-    # create_user_credential(args.username, args.publickey)
+    if args.asRoot:
+        create_user_credential(args.username, args.publickey)
 
     clean_up()
 
