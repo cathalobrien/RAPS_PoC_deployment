@@ -8,4 +8,4 @@ params="params.json" #gotten by launching matching vm via web UI and running "cy
 cyclecloud import_cluster $clusterName --force -c $clusterType -f $templateFile -p $params
 cyclecloud start_cluster hbv3-cluster
 echo "will take ~10 mins to start"
-echo "then, you can connect with 'cyclecloud connect scheduler -c hbv3-cluster'"
+echo "then, you can connect with 'cyclecloud connect scheduler -c hbv3-cluster -k ~/RAPS_PoC_deployment/.ssh/cc_key'"

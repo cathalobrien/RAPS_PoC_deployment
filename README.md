@@ -32,3 +32,6 @@ add an option to optionally create CC host and instead specify URL of an existin
 
 public key isnt being aded to hpc\_admin account correctly
 i guess i have to get the priv key into this repo somehow too
+
+at the moment I have to manually add the public key via web UI in order to connect
+then connect with: cyclecloud connect scheduler -c slurm-test -k ~/RAPS\_PoC\_deployment/.ssh/cc\_key
