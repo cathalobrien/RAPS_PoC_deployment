@@ -29,8 +29,7 @@ EOM
 #send update file to cycleserver
 echo "sending $output_file to $cycleserver:$output_file_loc"
 #scp -i ../.ssh/cc_key $output_file hpc_admin@$cycleserver:$output_file_loc #doesnt work need root perms for output_file_loc
-#hacky workaround
-cat $output_file | ssh -i ../.ssh/cc_key hpc_admin@$cycleserver "sudo tee -a $output_file_loc/$output_file"
+cat $output_file | ssh -i ../.ssh/cc_key hpc_admin@$cycleserver "sudo tee -a $output_file_loc/$output_file" #hacky workaround
 
 #cleanup
 rm $output_file

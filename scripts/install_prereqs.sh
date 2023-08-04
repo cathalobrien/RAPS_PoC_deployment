@@ -15,7 +15,8 @@ sudo yum install -y gcc libffi-devel python36-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 
 echo "now type 'az login' to complete setup"
-cp ~/bin/az /usr/bin #so root can find it
+#uncomment these lines to run as root, not needed currently tho
+#cp ~/bin/az /usr/bin #so root can find it
 #sudo az login 
-sudo az login 
+az login 
 
