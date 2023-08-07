@@ -21,7 +21,9 @@ The script ends by outputing the web address for the Cyclecloud GUI, as well as 
 ## 4: Launch a Cluster
 Navigate to the URL outputed by "scripts/install\_cyclecloud\_cli.sh" and log in. Click the "+" button in the bottom left corner to create a new cluster. Select the template called "alma\_slurm\_singleQ". Most options are preloaded, simply fill in a name and select a subnet.
 
-## 5: create and launch a cluster via the cyclecloud gui
+Alternatively, there's now a script "scripts/create\_cluster.sh" which will create and launch a cluster based on the ECMWF-specific VMI containing hbv3 instances via the command line. The scheduler node will take around 5 mins to launch. The script will then configure the scheduler, by adding a public key so you can connect, uploading a private key which can be used to clone git repos and then cloning raps and some other repos.
+ Then you can connect using "cyclecloud connect scheduler -c hbv3-cluster -k ~/RAPS\_PoC\_deployment/.ssh/cc\_key".
+
 
 
 ## TODO

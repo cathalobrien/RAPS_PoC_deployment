@@ -2,7 +2,7 @@
 #takes a username, a public key file and a cyclecloud host IP
 #NOTE currently will overwrite previously existing $output_file, shouldnt matter if this file just triggers an update on creation
  
-echo "usage: bash update_pub_key.sh [user to be updated] [new pub key] [cyclecloud host IP]"
+echo "usage: bash update_pub_key.sh [user to be updated] [ABSOLUTE path to new pub key] [cyclecloud host IP]"
 set -u #stop if no CLAs given
 
 cd "$(dirname "$0")"/..
