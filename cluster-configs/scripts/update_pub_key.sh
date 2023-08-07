@@ -5,7 +5,7 @@
 echo "usage: bash update_pub_key.sh [user to be updated] [new pub key] [cyclecloud host IP]"
 set -u #stop if no CLAs given
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")"/..
 
 username=$1
 pub_key_file=$2
