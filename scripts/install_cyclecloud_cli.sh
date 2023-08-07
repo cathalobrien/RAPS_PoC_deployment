@@ -13,7 +13,7 @@ unzip -o cyclecloud-cli.zip
 cd /tmp/cyclecloud-cli-installer
 ./install.sh -y
 cd /tmp
-rm -rf cycleIcloud-cli*
+rm -rf cyclecloud-cli*
 
 #initalize cyclecloud cli
 cd $cycle_dir
