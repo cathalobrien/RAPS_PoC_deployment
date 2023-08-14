@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "cc_tf_rg" {
-  name     = "${var.prefix}-resources"
-  location = var.location
-}
-
 resource "azurerm_virtual_network" "cc_tf_vnet" {
   name                = "${var.prefix}-network"
   location            = azurerm_resource_group.cc_tf_rg.location

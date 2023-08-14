@@ -3,7 +3,6 @@ cyclecloud_tenant_id = ""
 cyclecloud_application_id = ""
 cyclecloud_application_secret = ""
 
-cyclecloud_storage_account = "tfccstorage2402" #Has to be a new storage account
 cyclecloud_password = "Ecmwf_demo1"
 cyclecloud_username = "hpc_admin"
 

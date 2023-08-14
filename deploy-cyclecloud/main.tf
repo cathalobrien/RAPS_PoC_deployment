@@ -3,8 +3,18 @@ locals {
   cyclecloud_install_script_url = "https://raw.githubusercontent.com/bwatrous/cyclecloud-terraform/master/scripts/cyclecloud_install.py"
 }
 
+# Generate random text for a unique storage account and rg name
+resource "random_id" "random_id" {
+  byte_length = 3 #hex_id will be 6 chars long
+}
+
+resource "azurerm_resource_group" "cc_tf_rg" {
+  name     = "${var.prefix}-resources-${random_id.random_id.hex}"
+  location = var.location
+}
+
 resource "azurerm_storage_account" "cc_tf_locker" {
-  name                     = var.cyclecloud_storage_account
+  name                     = "${var.cyclecloud_storage_account}${random_id.random_id.hex}" #concat random string onto the end
   resource_group_name      = azurerm_resource_group.cc_tf_rg.name
   location                 = azurerm_resource_group.cc_tf_rg.location
   account_tier             = "Standard"
@@ -73,7 +83,7 @@ resource "azurerm_virtual_machine_extension" "install_cyclecloud" {
     # ${var.cyclecloud_dns_label}.${var.location}.cloudapp.azure.com" 
   settings = <<SETTINGS
     {
-        "commandToExecute": "echo \"Launch Time: \" > /tmp/launch_time  && date >> /tmp/launch_time && curl -k -L -o /tmp/cyclecloud_install.py \"${local.cyclecloud_install_script_url}\" && python3 /tmp/cyclecloud_install.py --acceptTerms --useManagedIdentity --username=${var.cyclecloud_username} --password='${var.cyclecloud_password}' --publickey='${var.cyclecloud_user_publickey}' --storageAccount=${var.cyclecloud_storage_account} --webServerMaxHeapSize=4096M --webServerPort=80 --webServerSslPort=443 "
+        "commandToExecute": "echo \"Launch Time: \" > /tmp/launch_time  && date >> /tmp/launch_time && curl -k -L -o /tmp/cyclecloud_install.py \"${local.cyclecloud_install_script_url}\" && python3 /tmp/cyclecloud_install.py --acceptTerms --useManagedIdentity --username=${var.cyclecloud_username} --password='${var.cyclecloud_password}' --publickey='${var.cyclecloud_user_publickey}' --storageAccount=${azurerm_storage_account.name} --webServerMaxHeapSize=4096M --webServerPort=80 --webServerSslPort=443 "
     }
 SETTINGS
 }

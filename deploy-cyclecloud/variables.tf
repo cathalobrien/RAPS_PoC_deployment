@@ -46,7 +46,7 @@ variable "cyclecloud_user_publickey" {
 # Storage account name can contain only lowercase letters and numbers.
 variable "cyclecloud_storage_account" {
   description = "Name of storage account to use for Azure CycleCloud storage locker"
-  default = "cctfstorage"
+  default = "ccstorage"
 }
 
 variable "cyclecloud_tenant_id" {
