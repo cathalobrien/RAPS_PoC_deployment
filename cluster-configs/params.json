@@ -43,6 +43,6 @@
   "HTCClusterInitSpecs" : null,
   "ExecuteNodesPublic" : false,
   "HPCMaxScalesetSize" : 100,
-  "additional_slurm_config" : null
-  "SubnetId" : ""
+  "additional_slurm_config" : null,
+  "SubnetId":""
 }
