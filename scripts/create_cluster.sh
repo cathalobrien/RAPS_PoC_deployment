@@ -41,5 +41,8 @@ bash scripts/configure_git.sh $scheduler_ip $github_key
 echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
 bash scripts/initalise_raps.sh $scheduler_ip
 
+#creation of lustre needs to know rg so send it over here
+bash sendAzureInfo.sh $scheduler_ip
+
 priv_key=${pub_key%.pub} #remove .pub 
 echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k $priv_key'"
