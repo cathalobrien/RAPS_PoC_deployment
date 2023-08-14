@@ -33,8 +33,12 @@ cycleserver_ip=`cd ../deploy-cyclecloud ; terraform output public_ip_address | t
 echo "Adding public key to user $user so you can connect via commandline"
 bash scripts/update_pub_key.sh $user $pub_key $cycleserver_ip
 
-echo "configuring git on the scheduler so that raps and repos can be cloned"
+echo "upload priv key onto scheduler so that you can ssh onto compute nodes"
 scheduler_ip=`cyclecloud show_nodes -c hbv3-cluster --output="%(PublicIp)s"`
+priv_key=${pub_key%.pub} #remove .pub 
+scp -i $priv_key $priv_key hpc_admin@$cluster_ip:~/.ssh 
+
+echo "configuring git on the scheduler so that raps and repos can be cloned"
 github_key=~/.ssh/github
 bash scripts/configure_git.sh $scheduler_ip $github_key
 
@@ -44,5 +48,4 @@ bash scripts/initalise_raps.sh $scheduler_ip
 #creation of lustre needs to know rg so send it over here
 bash sendAzureInfo.sh $scheduler_ip
 
-priv_key=${pub_key%.pub} #remove .pub 
 echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k $priv_key'"
