@@ -44,4 +44,5 @@
   "ExecuteNodesPublic" : false,
   "HPCMaxScalesetSize" : 100,
   "additional_slurm_config" : null
+  "SubnetId" : ""
 }
