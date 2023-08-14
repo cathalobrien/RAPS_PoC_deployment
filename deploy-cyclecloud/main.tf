@@ -5,6 +5,11 @@ locals {
 
 # Generate random text for a unique storage account and rg name
 resource "random_id" "random_id" {
+  #without a keeper the same seed will be reused
+  keepers = {
+    #use timestep at 'terraform apply' as seed
+    first = "${timestamp()}"
+  }   
   byte_length = 3 #hex_id will be 6 chars long
 }
 
@@ -83,7 +88,7 @@ resource "azurerm_virtual_machine_extension" "install_cyclecloud" {
     # ${var.cyclecloud_dns_label}.${var.location}.cloudapp.azure.com" 
   settings = <<SETTINGS
     {
-        "commandToExecute": "echo \"Launch Time: \" > /tmp/launch_time  && date >> /tmp/launch_time && curl -k -L -o /tmp/cyclecloud_install.py \"${local.cyclecloud_install_script_url}\" && python3 /tmp/cyclecloud_install.py --acceptTerms --useManagedIdentity --username=${var.cyclecloud_username} --password='${var.cyclecloud_password}' --publickey='${var.cyclecloud_user_publickey}' --storageAccount=${azurerm_storage_account.name} --webServerMaxHeapSize=4096M --webServerPort=80 --webServerSslPort=443 "
+        "commandToExecute": "echo \"Launch Time: \" > /tmp/launch_time  && date >> /tmp/launch_time && curl -k -L -o /tmp/cyclecloud_install.py \"${local.cyclecloud_install_script_url}\" && python3 /tmp/cyclecloud_install.py --acceptTerms --useManagedIdentity --username=${var.cyclecloud_username} --password='${var.cyclecloud_password}' --publickey='${var.cyclecloud_user_publickey}' --storageAccount=${azurerm_storage_account.cc_tf_locker.name} --webServerMaxHeapSize=4096M --webServerPort=80 --webServerSslPort=443 "
     }
 SETTINGS
 }
