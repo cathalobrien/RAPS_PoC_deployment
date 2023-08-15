@@ -20,3 +20,8 @@ echo "now type 'az login' to complete setup"
 #sudo az login 
 az login 
 
+#on mac:
+#	brew install terraform
+#	brew install jq
+#	export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
+#	export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"

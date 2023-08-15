@@ -1,4 +1,5 @@
 #This script should be run AFTER you have created your cyclelcoud host using terraform apply
+set -xe
 
 #get the IP of the cyclecloud host server
 cd "$(dirname "$0")" #ensure we are in the RAPS_PoC_deployment/scripts dir

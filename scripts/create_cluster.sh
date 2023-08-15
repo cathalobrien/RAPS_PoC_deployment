@@ -12,7 +12,7 @@ params="params.json" #gotten by launching matching vm via web UI and running "cy
 #subnet name depends on RG which has random chars, therefore query TF for rg name then update params.json
 rg_name=`cd ../deploy-cyclecloud ; terraform output rg_name | tr -d '"'`
 subnet_name=${rg_name}/raps-poc-deployment-network/raps-poc-deployment-subnet
-sed -i -e "/SubnetId/c\  \"SubnetId\":\"${subnet_name}\"" $params
+sed -i -e "/SubnetId/c\  \"SubnetId\":\"${subnet_name}\"" $params || (jq --arg subnet_name $subnet_name '.SubnetId = $subnet_name' $params > $params.tmp && mv $params.tmp $params)
 
 cyclecloud import_cluster $clusterName --force -c $clusterType -f $templateFile -p $params
 echo "Creating $clusterName based on $clusterType in $templateFile"
@@ -23,12 +23,12 @@ echo "wait for cluster to start by querying show_cluster once a min"
 while ! cyclecloud show_cluster hbv3-cluster | grep -q Started; do
 #if cyclecloud show_cluster hbv3-cluster | grep Started; then echo "cluster has started"; else echo "cluster isnt ready"; fi;
 echo "not ready yet..."
-sleep 1m
+sleep 60 #1m doesnt work on mac
 done
 echo "Cluster has started!"
 
 user=hpc_admin
-pub_key=~/RAPS_PoC_deployment/.ssh/cc_key.pub
+pub_key=../.ssh/cc_key.pub
 cycleserver_ip=`cd ../deploy-cyclecloud ; terraform output public_ip_address | tr -d '"'`
 echo "Adding public key to user $user so you can connect via commandline"
 bash scripts/update_pub_key.sh $user $pub_key $cycleserver_ip

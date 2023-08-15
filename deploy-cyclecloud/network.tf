@@ -14,10 +14,10 @@ resource "azurerm_subnet" "cc_tf_subnet" {
 }
 
 resource "azurerm_public_ip" "cc_tf_public_ip" {
-  name                         = "${var.prefix}-public_ip"
+  name                         = "${var.prefix}-${random_id.random_id.hex}-public_ip"
   location                     = azurerm_resource_group.cc_tf_rg.location
   resource_group_name          = azurerm_resource_group.cc_tf_rg.name
-  domain_name_label            = var.cyclecloud_dns_label
+  domain_name_label            = "${var.cyclecloud_dns_label}${random_id.random_id.hex}"
   allocation_method            = "Dynamic"
 }
 
