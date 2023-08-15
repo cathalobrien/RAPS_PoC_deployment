@@ -36,7 +36,7 @@ bash scripts/update_pub_key.sh $user $pub_key $cycleserver_ip
 echo "upload priv key onto scheduler so that you can ssh onto compute nodes"
 scheduler_ip=`cyclecloud show_nodes -c hbv3-cluster --output="%(PublicIp)s"`
 priv_key=${pub_key%.pub} #remove .pub 
-scp -i $priv_key $priv_key hpc_admin@$cluster_ip:~/.ssh 
+scp -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
 
 echo "configuring git on the scheduler so that raps and repos can be cloned"
 github_key=~/.ssh/github
@@ -46,6 +46,6 @@ echo "cloning raps and raps-poc (contains azure-specific build and benchmark scr
 bash scripts/initalise_raps.sh $scheduler_ip
 
 #creation of lustre needs to know rg so send it over here
-bash sendAzureInfo.sh $scheduler_ip
+bash scripts/sendAzureInfo.sh $scheduler_ip
 
 echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k $priv_key'"
