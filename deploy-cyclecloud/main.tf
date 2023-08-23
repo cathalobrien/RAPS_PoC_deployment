@@ -1,6 +1,6 @@
 locals {
   virtual_machine_name = "${var.prefix}-vm"
-  cyclecloud_install_script_url = "https://raw.githubusercontent.com/bwatrous/cyclecloud-terraform/master/scripts/cyclecloud_install.py"
+  cyclecloud_install_script_url = "https://raw.githubusercontent.com/cathalobrien/RAPS_PoC_deployment/main/deploy-cyclecloud/scripts/cyclecloud_install.py"
 }
 
 # Generate random text for a unique storage account and rg name
