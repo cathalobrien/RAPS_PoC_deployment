@@ -2,6 +2,7 @@ cd "$(dirname "$0")" #ensure we are in the RAPS_PoC_deployment/scripts dir
 cd ../cluster-configs
 
 set -ue
+echo "Make sure you add your github key path in RAPS_PoC_deployment/config.env"
 
 #Create and Launch cluster
 clusterName="hbv3-cluster"
@@ -39,7 +40,7 @@ priv_key=${pub_key%.pub} #remove .pub
 scp -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
 
 echo "configuring git on the scheduler so that raps and repos can be cloned"
-github_key=~/.ssh/github
+source ../config.env #load github_key
 bash scripts/configure_git.sh $scheduler_ip $github_key
 
 echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
