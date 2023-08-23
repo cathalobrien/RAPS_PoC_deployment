@@ -1,6 +1,6 @@
 #first time setup on a new VM, clones raps and raps-poc (cloud specific bm and build scripts) on a given scheduler node
 echo "usage: bash initalise_raps.sh [cluster scheduler ip]"
-set -uex
+set -ue
 cd "$(dirname "$0")"
 cluster_ip=$1
 source ../../config.env #get cc username
