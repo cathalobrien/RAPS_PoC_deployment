@@ -8,9 +8,12 @@ github_key=$2
 
 cd "$(dirname "$0")"/..
 
-scp -i ../.ssh/cc_key $github_key $cyclecloud_username@$cluster_ip:~/.ssh/github
+source ../config.env #get $cyclecloud_username
+scp -oStrictHostKeyChecking=no -i ../.ssh/cc_key $github_key $cyclecloud_username@$cluster_ip:~/.ssh/github
 
 cat > config <<- EOM
+Host *
+    StrictHostKeyChecking no
 Host github.com
         User git
         Hostname github.com
@@ -22,8 +25,7 @@ Host git.ecmwf.int
 EOM
 chmod 600 config
 
-source ../config.env #get $cyclecloud_username
 #scp -i ../.ssh/cc_key config $cyclecloud_username@$cluster_ip:~/.ssh
 #ssh -i ../.ssh/cc_key $cyclecloud_username@$cluster_ip "sudo cat config >> /shared/home/$cyclecloud_username/.ssh/config" #not using scp bc we want to append not overwrite
-cat config | ssh -i ../.ssh/cc_key $cyclecloud_username@$cluster_ip "sudo tee -a /shared/home/$cyclecloud_username/.ssh/config" #needs to be sudo bc config is protected
+cat config | ssh -oStrictHostKeyChecking=no -i ../.ssh/cc_key $cyclecloud_username@$cluster_ip "sudo tee -a /shared/home/$cyclecloud_username/.ssh/config" #needs to be sudo bc config is protected
 rm config
