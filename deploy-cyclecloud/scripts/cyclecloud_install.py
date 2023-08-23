@@ -410,7 +410,8 @@ def download_install_cc():
     if "ubuntu" in str(platform.platform()).lower():
         _catch_sys_error(["apt", "install", "-y", "cyclecloud8"])
     else:
-        _catch_sys_error(["yum", "install", "-y", "cyclecloud8"])
+        _catch_sys_error(["yum", "install", "-y", "cyclecloud8-8.4.0-3122"])
+        #_catch_sys_error(["yum", "install", "-y", "cyclecloud8-8.4.0"])
 
 def configure_msft_repos():
     if "ubuntu" in str(platform.platform()).lower():
