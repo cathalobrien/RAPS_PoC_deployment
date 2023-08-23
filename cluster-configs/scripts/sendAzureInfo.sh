@@ -11,5 +11,6 @@ cat > $file <<- EOM
 rg_name=$rg_name
 EOM
 
-scp -i ../.ssh/cc_key $file hpc_admin@$cluster_ip:~
+source ../config.env #get username
+scp -i ../.ssh/cc_key $file $cyclecloud_username@$cluster_ip:~
 rm $file
