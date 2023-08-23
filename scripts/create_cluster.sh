@@ -28,7 +28,8 @@ sleep 60 #1m doesnt work on mac
 done
 echo "Cluster has started!"
 
-user=hpc_admin
+source ../config.env #load github_key and username
+user=$cyclecloud_username
 pub_key=../.ssh/cc_key.pub
 cycleserver_ip=`cd ../deploy-cyclecloud ; terraform output public_ip_address | tr -d '"'`
 echo "Adding public key to user $user so you can connect via commandline"
@@ -40,7 +41,6 @@ priv_key=${pub_key%.pub} #remove .pub
 scp -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
 
 echo "configuring git on the scheduler so that raps and repos can be cloned"
-source ../config.env #load github_key
 bash scripts/configure_git.sh $scheduler_ip $github_key
 
 echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
