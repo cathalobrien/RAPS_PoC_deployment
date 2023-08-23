@@ -8,21 +8,22 @@ github_key=$2
 
 cd "$(dirname "$0")"/..
 
-scp -i ../.ssh/cc_key $github_key hpc_admin@$cluster_ip:~/.ssh
+scp -i ../.ssh/cc_key $github_key $cyclecloud_username@$cluster_ip:~/.ssh/github
 
 cat > config <<- EOM
 Host github.com
         User git
         Hostname github.com
-        IdentityFile /shared/home/hpc_admin/.ssh/github
+        IdentityFile /shared/home/$cyclecloud_username/.ssh/github
 Host git.ecmwf.int
         User git
         Hostname git.ecmwf.int
-        IdentityFile /shared/home/hpc_admin/.ssh/github
+        IdentityFile /shared/home/$cyclecloud_username/.ssh/github
 EOM
 chmod 600 config
 
-#scp -i ../.ssh/cc_key config hpc_admin@$cluster_ip:~/.ssh
-#ssh -i ../.ssh/cc_key hpc_admin@$cluster_ip "sudo cat config >> /shared/home/hpc_admin/.ssh/config" #not using scp bc we want to append not overwrite
-cat config | ssh -i ../.ssh/cc_key hpc_admin@$cluster_ip "sudo tee -a /shared/home/hpc_admin/.ssh/config" #needs to be sudo bc config is protected
+source ../config.env #get $cyclecloud_username
+#scp -i ../.ssh/cc_key config $cyclecloud_username@$cluster_ip:~/.ssh
+#ssh -i ../.ssh/cc_key $cyclecloud_username@$cluster_ip "sudo cat config >> /shared/home/$cyclecloud_username/.ssh/config" #not using scp bc we want to append not overwrite
+cat config | ssh -i ../.ssh/cc_key $cyclecloud_username@$cluster_ip "sudo tee -a /shared/home/$cyclecloud_username/.ssh/config" #needs to be sudo bc config is protected
 rm config
