@@ -15,7 +15,7 @@ if brew -v; then #using mac
 	export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
 	export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
 
-elif yum -v; then #using RHEL/centos/alma
+elif yum --help > /dev/null ; then #using RHEL/centos/alma
 	echo "using yum"
 
 	#Install terraform
