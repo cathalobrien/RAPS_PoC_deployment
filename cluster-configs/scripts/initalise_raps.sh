@@ -7,5 +7,5 @@ source ../../config.env #get cc username
 user=$cyclecloud_username
 ssh_key=../../.ssh/cc_key
 
-ssh -i $ssh_key $user@$cluster_ip "git clone git@github.com:cathalobrien/raps-poc.git"
-ssh -i $ssh_key $user@$cluster_ip "cd raps-poc/scripts; bash init.sh"
+ssh -o StrictHostKeychecking=no -i $ssh_key $user@$cluster_ip "git clone git@github.com:cathalobrien/raps-poc.git"
+ssh -o StrictHostKeychecking=no -i $ssh_key $user@$cluster_ip "cd raps-poc/scripts; bash init.sh"
