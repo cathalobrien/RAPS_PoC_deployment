@@ -38,7 +38,7 @@ bash scripts/update_pub_key.sh $user $pub_key $cycleserver_ip
 echo "upload priv key onto scheduler so that you can ssh onto compute nodes"
 scheduler_ip=`cyclecloud show_nodes -c hbv3-cluster --output="%(PublicIp)s"`
 priv_key=${pub_key%.pub} #remove .pub 
-scp -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
+scp -o StrictHostKeychecking=no -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
 
 echo "configuring git on the scheduler so that raps and repos can be cloned"
 bash scripts/configure_git.sh $scheduler_ip $github_key
