@@ -42,6 +42,9 @@ scp -o StrictHostKeychecking=no -i $priv_key $priv_key hpc_admin@$scheduler_ip:~
 echo "configuring git on the scheduler so that raps and repos can be cloned"
 bash scripts/configure_git.sh $scheduler_ip
 
+echo "installing and logging into Azure CLI on cluster"
+bash scripts/install_az_cli.sh $scheduler_ip
+
 echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
 bash scripts/initalise_raps.sh $scheduler_ip
 
