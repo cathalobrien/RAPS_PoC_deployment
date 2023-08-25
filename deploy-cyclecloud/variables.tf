@@ -61,4 +61,7 @@ variable "cyclecloud_application_secret" {
   description = "Service Principle Application Secret"
 }
 
+variable "sub_id" {
+  description = "subscribtion ID of the azure account Terraform is deploying into"
+}
 
