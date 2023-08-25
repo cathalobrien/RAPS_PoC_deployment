@@ -12,5 +12,5 @@ rg_name=$rg_name
 EOM
 
 source ../config.env #get username
-scp -i ../.ssh/cc_key $file $cyclecloud_username@$cluster_ip:~
+scp -o StrictHostKeyChecking=no -i ../.ssh/cc_key $file $cyclecloud_username@$cluster_ip:~
 rm $file
