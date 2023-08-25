@@ -1,7 +1,7 @@
 #installs libraries lke terraform and azcopy if you don't already have them
 set -e
 
-if terraform --help > /dev/null || az --help > /dev/null; then 
+if terraform --help > /dev/null && az --help > /dev/null; then 
 	echo "prereqs installed" 
 else 
 	echo "detecting package manager..."
