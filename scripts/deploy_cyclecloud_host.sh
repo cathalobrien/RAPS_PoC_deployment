@@ -8,13 +8,13 @@ echo "Make sure you add you SP details to RAPS_PoC_deployment/config.env"
 terraform plan -var="cyclecloud_tenant_id=$cyclecloud_tenant_id" \
 	-var="cyclecloud_application_id=$cyclecloud_application_id" \
 	-var="cyclecloud_application_secret=$cyclecloud_application_secret" \
-	-var="cyclecloud_user_publickey=$pub_key"
-	-var="cyclecloud_password=$cyclecloud_password"
+	-var="cyclecloud_user_publickey=$pub_key" \
+	-var="cyclecloud_password=$cyclecloud_password" \
 	-var="cyclecloud_username=$cyclecloud_username"
 
 terraform apply --auto-approve -var="cyclecloud_tenant_id=$cyclecloud_tenant_id" \
         -var="cyclecloud_application_id=$cyclecloud_application_id" \
         -var="cyclecloud_application_secret=$cyclecloud_application_secret" \
-	-var="cyclecloud_user_publickey=$pub_key"
-	-var="cyclecloud_password=$cyclecloud_password"
+	-var="cyclecloud_user_publickey=$pub_key" \
+	-var="cyclecloud_password=$cyclecloud_password" \
 	-var="cyclecloud_username=$cyclecloud_username"
