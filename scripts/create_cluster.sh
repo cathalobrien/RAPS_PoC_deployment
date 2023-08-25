@@ -2,7 +2,6 @@ cd "$(dirname "$0")" #ensure we are in the RAPS_PoC_deployment/scripts dir
 cd ../cluster-configs
 
 set -ue
-echo "Make sure you add your github key path in RAPS_PoC_deployment/config.env"
 
 #Create and Launch cluster
 clusterName="hbv3-cluster"
@@ -28,7 +27,7 @@ sleep 60 #1m doesnt work on mac
 done
 echo "Cluster has started!"
 
-source ../config.env #load github_key and username
+source ../config.env #load  username
 user=$cyclecloud_username
 pub_key=../.ssh/cc_key.pub
 cycleserver_ip=`cd ../deploy-cyclecloud ; terraform output public_ip_address | tr -d '"'`
@@ -41,7 +40,7 @@ priv_key=${pub_key%.pub} #remove .pub
 scp -o StrictHostKeychecking=no -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
 
 echo "configuring git on the scheduler so that raps and repos can be cloned"
-bash scripts/configure_git.sh $scheduler_ip $github_key
+bash scripts/configure_git.sh $scheduler_ip
 
 echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
 bash scripts/initalise_raps.sh $scheduler_ip

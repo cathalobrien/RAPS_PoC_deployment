@@ -47,13 +47,11 @@ if test ! -f ./config.env ; then
 	read -sp "Service Principal application secret: " cyclecloud_application_secret
 	echo "" #newline
 	read -p "Service Principal tenant id: " cyclecloud_tenant_id
-	read -p "Absolute path to github key: " github_key
 	read -p "Cyclecloud username: " cyclecloud_username
 	read -sp "Cyclecloud password (must have an uppercase char, a number and a special char): " cyclecloud_password
 	echo ""
 
 	cat <<EOF > config.env
-github_key=$github_key
 cyclecloud_tenant_id=$cyclecloud_tenant_id
 cyclecloud_application_id=$cyclecloud_application_id
 cyclecloud_application_secret=$cyclecloud_application_secret
