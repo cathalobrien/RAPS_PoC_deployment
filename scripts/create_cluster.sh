@@ -45,10 +45,11 @@ bash scripts/configure_git.sh $scheduler_ip
 echo "installing and logging into Azure CLI on cluster"
 bash scripts/install_az_cli.sh $scheduler_ip
 
-echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
-bash scripts/initalise_raps.sh $scheduler_ip
-
 #creation of lustre needs to know rg so send it over here
 bash scripts/sendAzureInfo.sh $scheduler_ip
 
-echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k $priv_key'"
+echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
+bash scripts/initalise_raps.sh $scheduler_ip
+
+echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k RAPS_PoC_deployment/.ssh/cc_key'"
+
