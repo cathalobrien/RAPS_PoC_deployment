@@ -52,4 +52,6 @@ echo "cloning raps and raps-poc (contains azure-specific build and benchmark scr
 bash scripts/initalise_raps.sh $scheduler_ip
 
 echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k RAPS_PoC_deployment/.ssh/cc_key'"
+echo "Once you connect to your cluster, you can create an LFS instance mounted at //lustre' using 'bash ~/raps-poc/lustre/create_lustre.sh'"
+echo "That will take ~10 mins to deploy. Once complete, you can run the IFS using Slurm batch scripts in '~/raps/bin/SLURM/azure/hbv*'"
 
