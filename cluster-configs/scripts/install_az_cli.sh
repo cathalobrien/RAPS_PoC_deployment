@@ -2,7 +2,6 @@
 #The install step being ehre should just be temporary until  add it into the image
 
 cd "$(dirname "$0")"/../..
-
 echo "usage: bash install_az_cli.sh [scheduler IP]"
 set -ue
 
@@ -12,6 +11,7 @@ user=$cyclecloud_username
 ssh_key=.ssh/cc_key
 
 #install azure cli
+#leaving this here bc for some reason, building az cli in the image breaks slurm compute node scheduling
 ssh -o StrictHostKeychecking=no -i $ssh_key $user@$cluster_ip "sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc"
 ssh -o StrictHostKeychecking=no -i $ssh_key $user@$cluster_ip "sudo dnf install -y https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm"
 ssh -o StrictHostKeychecking=no -i $ssh_key $user@$cluster_ip "sudo dnf install -y azure-cli"

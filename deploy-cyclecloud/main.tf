@@ -19,7 +19,7 @@ resource "azurerm_resource_group" "cc_tf_rg" {
 }
 
 resource "azurerm_storage_account" "cc_tf_locker" {
-  name                     = "${var.cyclecloud_storage_account}${random_id.random_id.hex}" #concat random string onto the end
+  name                     = "${var.cyclecloud_storage_account}${random_id.random_id.hex}" 
   resource_group_name      = azurerm_resource_group.cc_tf_rg.name
   location                 = azurerm_resource_group.cc_tf_rg.location
   account_tier             = "Standard"

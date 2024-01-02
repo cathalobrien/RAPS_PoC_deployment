@@ -2,7 +2,7 @@
 #Has A LOT of perms tho so make sure you keep the creds secure
 
 echo "usgae: bash create_sp.sh [sp_name]"
-set -u
+set -uex
 sp_name=$1
 
 #create the sp
