@@ -2,3 +2,4 @@
 terraform.tfstate*
 .ssh
 config.env
+.DS_Store
