@@ -1,5 +1,7 @@
 #This script should be run AFTER you have created your cyclelcoud host using terraform apply
-set -e
+set -xe
+
+pyenv activate cyclecloud
 
 #get the IP of the cyclecloud host server
 cd "$(dirname "$0")" #ensure we are in the RAPS_PoC_deployment/scripts dir
@@ -8,11 +10,14 @@ cycle_dir=$PWD
 export ip=$(terraform output public_ip_address | tr -d '"')
 
 #needed on mac
-#export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
-#export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
+export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
 #pyenv version 2.7.18
 
 #instal the cyclecloud cli
+#install="true"
+install="false"
+if [[ $install == "true" ]]; then
 cd /tmp
 wget --no-check-certificate https://$ip/static/tools/cyclecloud-cli.zip
 unzip -o cyclecloud-cli.zip
@@ -20,6 +25,7 @@ cd /tmp/cyclecloud-cli-installer
 ./install.sh -y
 cd /tmp
 rm -rf cyclecloud-cli*
+fi
 
 #initalize cyclecloud cli
 cd $cycle_dir

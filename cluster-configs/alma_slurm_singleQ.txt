@@ -576,17 +576,18 @@ Order = 20
         Config.Entries := {[Value="Generated"], [Value="Cluster Prefix"]}
         Conditions.Hidden := NodeNameIsHostname != true
 
-	[[[parameter ImageID]]]
-	label = Image ID
-	Description = An ID for a custom image.
-	Config.OS = linux
-	DefaultValue = /subscriptions/{AZURE_SUB_ID}/resourceGroups/packer_image_rg/providers/Microsoft.Compute/images/almaPackerImage
+	#[[[parameter ImageID]]]
+	#label = Image ID
+	#Description = An ID for a custom image.
+	#Config.OS = linux
+	#DefaultValue = /subscriptions/{AZURE_SUB_ID}/resourceGroups/packer_image_rg/providers/Microsoft.Compute/images/almaPackerImage
 
 	[[[parameter ImageName]]]
 	label = Image Name
 	Description = An Name for a custom image.
 	Config.OS = linux
-	DefaultValue = almalinux:almalinux-hpc:8_7-hpc-gen2:8.7.2023060101
+	#DefaultValue = almalinux:almalinux-hpc:8_7-hpc-gen2:8.7.2023060101
+	DefaultValue = almalinux:almalinux-hpc:8_5-hpc-gen2:latest
 
 	#Replacing these with image ID above
         #[[[parameter SchedulerImageName]]]

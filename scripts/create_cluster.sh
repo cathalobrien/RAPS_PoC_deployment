@@ -3,10 +3,12 @@ cd ../cluster-configs
 
 set -ue
 
+user="hpcuser"
+
 #Create and Launch cluster
-clusterName="hbv3-cluster"
-clusterType="alma_slurm_singleQ"
-templateFile="alma_slurm_singleQ.txt"
+clusterName="ifs1"
+clusterType="slurm_multi_queues"
+templateFile="slurm_multi_queues.txt"
 params="params.json" #gotten by launching matching vm via web UI and running "cyclecloud export_parameters cluster_name > params.json"
 
 #subnet name depends on RG which has random chars, therefore query TF for rg name then update params.json
@@ -16,11 +18,11 @@ sed -i -e "/SubnetId/c\  \"SubnetId\":\"${subnet_name}\"" $params || (jq --arg s
 
 cyclecloud import_cluster $clusterName --force -c $clusterType -f $templateFile -p $params
 echo "Creating $clusterName based on $clusterType in $templateFile"
-cyclecloud start_cluster hbv3-cluster
+cyclecloud start_cluster $clusterName
 echo "wait for cluster to start by querying show_cluster once a min"
 
 #should take ~5 mins
-while ! cyclecloud show_cluster hbv3-cluster | grep -q Started; do
+while ! cyclecloud show_cluster $clusterName | grep -q Started; do
 #if cyclecloud show_cluster hbv3-cluster | grep Started; then echo "cluster has started"; else echo "cluster isnt ready"; fi;
 echo "not ready yet..."
 sleep 60 #1m doesnt work on mac
@@ -35,9 +37,9 @@ echo "Adding public key to user $user so you can connect via commandline"
 bash scripts/update_pub_key.sh $user $pub_key $cycleserver_ip
 
 echo "upload priv key onto scheduler so that you can ssh onto compute nodes"
-scheduler_ip=`cyclecloud show_nodes -c hbv3-cluster --output="%(PublicIp)s"`
+scheduler_ip=`cyclecloud show_nodes -c $clusterName --output="%(PublicIp)s"`
 priv_key=${pub_key%.pub} #remove .pub 
-scp -o StrictHostKeychecking=no -i $priv_key $priv_key hpc_admin@$scheduler_ip:~/.ssh 
+scp -o StrictHostKeychecking=no -i $priv_key $priv_key $user@$scheduler_ip:~/.ssh 
 
 echo "configuring git on the scheduler so that raps and repos can be cloned"
 bash scripts/configure_git.sh $scheduler_ip
@@ -48,8 +50,8 @@ bash scripts/install_az_cli.sh $scheduler_ip
 #creation of lustre needs to know rg so send it over here
 bash scripts/sendAzureInfo.sh $scheduler_ip
 
-echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
-bash scripts/initalise_raps.sh $scheduler_ip
+#echo "cloning raps and raps-poc (contains azure-specific build and benchmark scripts for raps and dwarves)"
+#bash scripts/initalise_raps.sh $scheduler_ip
 
 echo "Now you can connect with 'cyclecloud connect scheduler -c $clusterName -k RAPS_PoC_deployment/.ssh/cc_key'"
 echo "Once you connect to your cluster, you can create an LFS instance mounted at //lustre' using 'bash ~/raps-poc/lustre/create_lustre.sh'"

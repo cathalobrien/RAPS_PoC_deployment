@@ -7,7 +7,7 @@
 #This config creates a cluster with a spot and a ondemand queue
 #Variables allow you to specify how many nodes and of what type you want
 
-[cluster alma_slurm_azureImage]
+[cluster slurm_multi_queues]
 FormLayout = selectionpanel
 Category = Schedulers
 
@@ -21,6 +21,11 @@ Autoscale = $Autoscale
     Region = $Region
     #KeyPairLocation = ~/RAPS_PoC_deployment/.ssh/cc_key
     KeyPairLocation = ~/.ssh/cyclecloud.pem
+
+    #These values correspond to the plan of the defult image, you will have to edit them if you change your image type
+    #ImagePlan.Publisher = almalinux
+    #ImagePlan.Product = almalinux-hpc
+    #ImagePlan.Name = 8_7-hpc-gen2
 
     #Install jetpack by default on all nodes
     #note, since Jetpack is already downloaded on this image, this command being set to true just runs an init script cyclecloud needs
@@ -250,7 +255,7 @@ Autoscale = $Autoscale
         #cant i just put this in nodearraybase as a variable since its constant across all queues
         #ImageID = $ImageID
     	ImageName = $ImageName
-        MaxCount = 10
+        MaxCount = $MaxNodes
         Azure.MaxScalesetSize = $HPCMaxScalesetSize
         AdditionalClusterInitSpecs = $HPCClusterInitSpecs
         Interruptible = true
@@ -315,7 +320,7 @@ Order = 10
 	[[[parameter MaxNodes]]]
 	label = Max HPC Nodes
 	Description = The number of HPC cores to start
-        DefaultValue = 32
+        DefaultValue = 100
         Config.Plugin = pico.form.NumberTextBox
         Config.MinValue = 1
         Config.IntegerOnly = true
@@ -417,7 +422,7 @@ Order = 15
         [[[parameter FilesystemSize]]]
         Label = Size (GB)
         Description = The filesystem size
-        DefaultValue = 100
+        DefaultValue = 400
 
         Config.Plugin = pico.form.NumberTextBox
         Config.MinValue = 10
@@ -571,39 +576,20 @@ Order = 20
         Config.Entries := {[Value="Generated"], [Value="Cluster Prefix"]}
         Conditions.Hidden := NodeNameIsHostname != true
 
-	[[[parameter ImageID]]]
-	label = Image ID
-	Description = An ID for a custom image.
-	Config.OS = linux
-	DefaultValue = /subscriptions/1ebf8a1b-0e8d-4f86-ba56-5fde937545f5/resourceGroups/packer_image_rg/providers/Microsoft.Compute/images/almaPackerImage
+	#[[[parameter ImageID]]]
+	#label = Image ID
+	#Description = An ID for a custom image.
+	#Config.OS = linux
+	#DefaultValue = /subscriptions/{AZURE_SUB_ID}/resourceGroups/packer_image_rg/providers/Microsoft.Compute/images/almaPackerImage
 
 	[[[parameter ImageName]]]
 	label = Image Name
 	Description = An Name for a custom image.
 	Config.OS = linux
-	DefaultValue = almalinux:almalinux-hpc:8_7-hpc-gen2:8.7.2023060101
-
-	#Replacing these with image ID above
-        #[[[parameter SchedulerImageName]]]
-        #Label = Scheduler OS
-        #ParameterType = Cloud.Image
-        #Config.OS = linux
-        #DefaultValue = almalinux8
-        #Config.Filter := Package in {"cycle.image.centos7", "cycle.image.ubuntu18", "almalinux8", "cycle.image.sles12-hpc", "cycle.image.sles15-hpc"}
-
-        #[[[parameter HPCImageName]]]
-        #Label = HPC OS
-        #ParameterType = Cloud.Image
-        #Config.OS = linux
-        #DefaultValue = almalinux8
-        #Config.Filter := Package in {"cycle.image.centos7", "cycle.image.ubuntu18", "almalinux8", "cycle.image.sles12-hpc", "cycle.image.sles15-hpc"}
-
-        #[[[parameter HTCImageName]]]
-        #Label = HTC OS
-        #ParameterType = Cloud.Image
-        #Config.OS = linux
-        #DefaultValue = almalinux8
-        #Config.Filter := Package in {"cycle.image.centos7", "cycle.image.ubuntu18", "almalinux8", "cycle.image.sles12-hpc", "cycle.image.sles15-hpc"}
+	#DefaultValue = almalinux:almalinux-hpc:8_7-hpc-gen2:8.7.2023060101
+	#DefaultValue = OpenLogic:CentOS-HPC:7.7:latest #cant install jetpack
+	#DefaultValue = Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest #works! but subsequent scripts break bc no rpm
+	DefaultValue = azhpc:azhop-compute:almalinux-8_7:2024.0305.1314
 
         [[[parameter SchedulerClusterInitSpecs]]]
         Label = Scheduler Cluster-Init

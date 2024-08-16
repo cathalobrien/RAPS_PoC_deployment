@@ -1,6 +1,14 @@
 #installs libraries lke terraform and azcopy if you don't already have them
 set -e
 
+echo "This script will check if terraform and Azure CLI are installed"
+echo "If not, it will try install them for you (works on Mac and Rhel linux)"
+echo "Then, it will ask you to provide credentials to authorise Cyclecloud to create VMs"
+echo "If you don't have these credentials, create them with:"
+echo "'az ad sp create-for-rbac --role=\"Owner\" --scopes=\"/subscriptions/SUBSCRIPTION_ID\"'"
+echo "If you made a mistake with the login creds, delete $ROOT/config.env and rerun the script to regenerate the config"
+
+
 if terraform --help > /dev/null && az --help > /dev/null; then 
 	echo "prereqs installed" 
 else 
