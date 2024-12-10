@@ -408,10 +408,10 @@ def download_install_cc():
     print("Installing Azure CycleCloud server")
 
     if "ubuntu" in str(platform.platform()).lower():
-        _catch_sys_error(["apt", "install", "-y", "cyclecloud8"])
+        _catch_sys_error(["apt", "install", "-y", "cyclecloud8-8.6.5"])
     else:
-        _catch_sys_error(["yum", "install", "-y", "cyclecloud8-8.4.0-3122"])
-        #_catch_sys_error(["yum", "install", "-y", "cyclecloud8-8.4.0"])
+        #_catch_sys_error(["yum", "install", "-y", "cyclecloud8-8.4.0-3122"])
+        _catch_sys_error(["yum", "install", "-y", "cyclecloud8-8.6.5"])
 
 def configure_msft_repos():
     if "ubuntu" in str(platform.platform()).lower():
